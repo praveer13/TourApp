@@ -1,27 +1,58 @@
 package com.website.tourapp;
 
+import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+public class MainActivity extends Activity {
 
     //Define your variables here
     private EditText ET_PhoneNumber;
     private static String phoneNumber;
 
+    //Define a local file in which we save user's details
+    public static final String USERFILE = "user_file";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Log.d("Status", "1");
-        new ContactServlet().execute(new Pair<Context, String>(this, "awesome person"));
+
+        //Display the welcome screen
+        this.setContentView(R.layout.activity_welcome);
+
+        //new ContactServlet().execute(new Pair<Context, String>(this, "awesome person"));
+
+        //Look if the app already has a phone number
+        if (fileExists(this,USERFILE)){
+            deleteFile(USERFILE);
+        }
+        if (fileExists(this,USERFILE)){
+            Log.d("Location","file exists");
+        }
+        else{
+            Log.d("Location", "Asking for the mobile number");
+            Intent i = new Intent(getApplicationContext(), RegisterPhone.class);
+            startActivity(i);
+
+
+        }
+
     }
 
     @Override
@@ -48,12 +79,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void phone_number_clicked(View view){
         // do something here
-        ET_PhoneNumber = (EditText)findViewById(R.id.user_phone_number);
+        ET_PhoneNumber = (EditText)findViewById(R.id.user_phone_number_editText);
         phoneNumber = ET_PhoneNumber.getText().toString();
 
         //setContentView(R.layout.user_form);
         Log.d("phone number", phoneNumber);
         new QueryServlet().execute(new Pair<Context,String>(this,phoneNumber));
+    }
+
+    //a function to check if a file already exists in the local system
+    public boolean fileExists(Context context, String fileName){
+        File file = context.getFileStreamPath(fileName);
+        if(file == null || !file.exists()){
+
+            return  false;
+        }
+        return true;
 
     }
 }

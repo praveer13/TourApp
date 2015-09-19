@@ -2,6 +2,13 @@
 <items version="2" >
 
     <item
+        jar="C:\Users\sourabh.gupta1\Documents\GitHub\TourApp\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="C:\Users\sourabh.gupta1\Documents\GitHub\TourApp\app\build\intermediates\pre-dexed\debug\classes-b1279266db62123dd191cfbdb165b127cc5cfd88.jar" />
+    </item>
+    <item
         jar="C:\Users\sourabh.gupta1\Documents\GitHub\TourApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
         jumboMode="false"
         revision="23.0.1"
@@ -21,13 +28,6 @@
         revision="23.0.1"
         sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
         <dex dex="C:\Users\sourabh.gupta1\Documents\GitHub\TourApp\app\build\intermediates\pre-dexed\debug\classes-f71ea54bb536d123b08e39b7ad04806634f8847e.jar" />
-    </item>
-    <item
-        jar="C:\Users\sourabh.gupta1\Documents\GitHub\TourApp\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="C:\Users\sourabh.gupta1\Documents\GitHub\TourApp\app\build\intermediates\pre-dexed\debug\classes-b1279266db62123dd191cfbdb165b127cc5cfd88.jar" />
     </item>
 
 </items>

@@ -7,7 +7,7 @@ package com.website.backend.backend_servlet;
 import java.io.*;
 import java.sql.*;
 import javax.servlet.http.*;
-//import com.google.appengine.api.utils.SystemProperty;
+
 
 public class userDetailsServlet extends HttpServlet {
 

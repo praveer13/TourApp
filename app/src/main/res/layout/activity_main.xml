@@ -20,7 +20,7 @@
         android:layout_weight="4" />
 
     <EditText
-        android:id="@+id/phone_number"
+        android:id="@+id/user_phone_number"
         android:hint="@string/phone_number_hint"
         android:inputType="phone"
         android:textSize="20dp"

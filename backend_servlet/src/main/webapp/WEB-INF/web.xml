@@ -5,8 +5,17 @@
         <servlet-class>com.website.backend.backend_servlet.MyServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>MyServlet</servlet-name>
-        <url-pattern>/hello</url-pattern>
+    <servlet-name>MyServlet</servlet-name>
+    <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>userDetailsServlet</servlet-name>
+        <servlet-class>com.website.backend.backend_servlet.userDetailsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userDetailsServlet</servlet-name>
+        <url-pattern>/userDetailsServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

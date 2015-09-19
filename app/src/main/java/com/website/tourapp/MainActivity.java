@@ -8,8 +8,13 @@ import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+
+    //Define your variables here
+    private EditText ET_PhoneNumber;
+    private static String phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +48,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void phone_number_clicked(View view){
         // do something here
+        ET_PhoneNumber = (EditText)findViewById(R.id.user_phone_number);
+        phoneNumber = ET_PhoneNumber.getText().toString();
 
         //setContentView(R.layout.user_form);
-        new ContactServlet().execute(new Pair<Context,String>(this,"yo"));
+        Log.d("phone number", phoneNumber);
+        new QueryServlet().execute(new Pair<Context,String>(this,phoneNumber));
 
     }
 }

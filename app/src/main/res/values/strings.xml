@@ -10,5 +10,6 @@
     <string name="user_first_name_hint">first name ex:John</string>
     <string name="user_details">Your Details...</string>
     <string name="user_last_name_hint">last name ex: Doe</string>
+    <string name="url_tour_db">jdbc:google:mysql://tourapp-1071:tour-sql-instance/tour_db</string>
 
 </resources>

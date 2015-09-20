@@ -13,6 +13,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 /**
  * Created by Sourabh.Gupta1 on 20-09-2015.
  */
@@ -95,9 +99,48 @@ public class RegisterPhone extends Activity{
         else if(count ==1){
             //Take him to his/her page
             showToast(context,"It's been a while! " );
+
+            //look for the file CONFIGFILE
+            if (readFromFile(MainActivity.CONFIGFILE) != null){
+                Intent intent = new Intent(context,GroupsActivity.class );
+                startActivity(intent);
+
+            }
+
         }
         else{
             showToast(context,response + response.length() + Integer.toString(1));
         }
+    }
+
+    //A method for reading a file
+    public  String[] readFromFile(String fileName){
+        String[] data = new String[3];
+
+        try{
+            InputStream inputStream = openFileInput(fileName);
+            if(inputStream != null){
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                String recievedString  = "";
+                StringBuilder stringBuilder = new StringBuilder();
+                while((recievedString = bufferedReader.readLine()) != null  ){
+                    stringBuilder.append(recievedString);
+                }
+                inputStream.close();
+                data = stringBuilder.toString().split(",");
+                return  data;
+            }
+            else{
+                return  null;
+            }
+
+        }
+        catch (Exception e){
+            Log.d("Error", e.getMessage() + "," + e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+        return  data;
     }
 }

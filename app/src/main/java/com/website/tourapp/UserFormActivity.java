@@ -1,12 +1,20 @@
 package com.website.tourapp;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringReader;
 
 /**
  * Created by Sourabh.Gupta1 on 20-09-2015.
@@ -61,6 +69,24 @@ public class UserFormActivity extends Activity {
 
             //Store his details on database
             new MakeAccountClient(this).execute(firstName,lastName,phoneNumber);
+            //Store his details on local as well
+            String details = phoneNumber + "," + firstName + "," + lastName;
+
+            /*try{
+                FileOutputStream fos = openFileOutput(MainActivity.CONFIGFILE, Context.MODE_PRIVATE);
+                fos.write(details.getBytes());
+                fos.close();
+            }
+            catch (Exception e){
+                Log.d("Error", e.getMessage() + "|" + e.getLocalizedMessage());
+                e.printStackTrace();
+            }
+            */
+            writeToFile(MainActivity.CONFIGFILE, details);
+            //Take the user to groups management page
+            Intent intent = new Intent(this,GroupsActivity.class);
+            intent.putExtra("phoneNumber", phoneNumber);
+            startActivity(intent);
 
 
         }
@@ -69,6 +95,18 @@ public class UserFormActivity extends Activity {
             Toast.makeText(this,"Invalid names", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    //Write to user config file
+    public void writeToFile(String fileName, String data){
+        try{
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(fileName, Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (Exception e){
+            Log.d("Error", e.getMessage() + "|" + e.getLocalizedMessage());
+        }
     }
 }
 

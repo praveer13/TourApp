@@ -2,6 +2,7 @@ package com.website.tourapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -21,13 +22,10 @@ public class RegisterPhone extends Activity{
     Spinner spinner;
     Button  next_button;
     EditText phone_editText;
-
+    String phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
-
-
-
 
         super.onCreate(savedInstanceState);
 
@@ -55,17 +53,13 @@ public class RegisterPhone extends Activity{
 
         next_button = (Button)findViewById(R.id.next_phone_signup);
         phone_editText = (EditText)findViewById(R.id.user_phone_number_editText);
-        String phoneNumber = phone_editText.getText().toString().trim();
+        phoneNumber = phone_editText.getText().toString().trim();
 
         String country = spinner.getSelectedItem().toString().trim();
         //
         if (phoneNumber.length() ==10 && country == "India"){
-            //new QueryServlet().execute(new Pair<Context,String>(this,phoneNumber.trim()));
-
-            //check if the phone number already exists
-            UserExistsAsync userExistsAsync = new UserExistsAsync();
-            //String fileExists = userExistsAsync(new Pair<Context, String>(this, phoneNumber));
-            new UserExistsAsync().execute(new Pair<Context, String>(this, phoneNumber));
+            Log.d("phoneNumber", phoneNumber);
+            new UserExistsAsync(this).execute(new Pair<Context, String>(this, phoneNumber));
             //String fileExists = new UserExistsAsync().doInBackground(new Pair<Context, String>(this, phoneNumber));
 
         }
@@ -91,7 +85,12 @@ public class RegisterPhone extends Activity{
             //Ask the user for his details like first name, last name etc
             showToast(context,"Welcome aboard! " );
 
-            //Now take the user to different screen for asking his details
+            //Take the user to user_form
+            Intent intent = new Intent(context,UserFormActivity.class);
+            intent.putExtra("phoneNumber", phoneNumber);
+            startActivity(intent);
+
+
         }
         else if(count ==1){
             //Take him to his/her page

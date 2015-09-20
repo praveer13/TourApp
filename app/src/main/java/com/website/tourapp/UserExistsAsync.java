@@ -1,5 +1,6 @@
 package com.website.tourapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -20,12 +21,21 @@ import java.net.URLConnection;
 
 public class UserExistsAsync  extends AsyncTask<Pair<Context,String>,Void,String>{
     private Context context;
+    public RegisterPhone registerPhone;
+
+    //constructor for this class
+    public UserExistsAsync(RegisterPhone a){
+
+        this.registerPhone =a;
+    }
 
     @Override
-    public   String doInBackground(Pair<Context, String>...param){
+    public   String doInBackground( Pair<Context, String>...param){
         context = param[0].first;
         String phoneNumber = param[0].second;
+        Log.d("phone no", phoneNumber);
         String response;
+
 
         //Try a connection with the Servlet
         try{
@@ -41,6 +51,7 @@ public class UserExistsAsync  extends AsyncTask<Pair<Context,String>,Void,String
             //take the response of the servlet
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()  ));
             response = in.readLine();
+
         }
         catch (Exception e){
             response = "Error," + "UserExistsAsync," +  e.getMessage();
@@ -53,7 +64,10 @@ public class UserExistsAsync  extends AsyncTask<Pair<Context,String>,Void,String
 
     @Override
     public void onPostExecute(  String result){
-        RegisterPhone registerPhone = new RegisterPhone();
-        registerPhone.onResult(context, result);
+        //RegisterPhone registerPhone = new RegisterPhone();
+        //registerPhone.onResult(context, result);
+        Log.d("Result" , result);
+        registerPhone.onResult(context,result);
+
     }
 }

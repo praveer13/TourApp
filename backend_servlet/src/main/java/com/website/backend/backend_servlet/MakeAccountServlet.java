@@ -1,6 +1,5 @@
 package com.website.backend.backend_servlet;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -15,16 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by Sourabh.Gupta1 on 20-09-2015.
  */
-public class UserExistsServlet extends HttpServlet {
+public class MakeAccountServlet extends HttpServlet {
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws IOException{
-
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
         //Define the variables here
         String url = "jdbc:google:mysql://tourapp-1071:tour-sql-instance/tour_db";
         PrintWriter out = response.getWriter();
-
         try{
             Class.forName("com.mysql.jdbc.GoogleDriver");
         }
@@ -34,31 +30,33 @@ public class UserExistsServlet extends HttpServlet {
         }
 
         try{
-            //Connection with the database
             Connection connection = DriverManager.getConnection(url, "root", "");
-
+            connection.setAutoCommit(false);
             try{
-                String phoneNumber = request.getParameter("mobileNumber").trim();
+                String phoneNumber = request.getParameter("mobileNumber");
+                String firstName  = request.getParameter("firstName");
+                String lastName = request.getParameter("lastName");
 
-                //Query for checking existance of number in our database
-                String query = "select count(*) as count from tour_db.userDetails where MobileNumber=?";
+                //query for uploading the details to UserDetails
+                String query = "insert into tour_db.userDetails (FirstName, LastName, MobileNumber) values(?,?,?)";
 
                 PreparedStatement statement = connection.prepareStatement(query);
-                statement.setString(1,phoneNumber);
-                ResultSet rs = statement.executeQuery();
+                statement.setString(1,firstName);
+                statement.setString(2,lastName);
+                statement.setString(3,phoneNumber);
 
-                //Check if the count is more than 0
-                while(rs.next()){
-                    String count = rs.getString("count");
-                    out.println(count);
-                }
+                int i = statement.executeUpdate();
+                connection.commit();
+
+                out.println(i);
             }
             finally {
                 connection.close();
             }
+
         }
         catch (Exception e){
-            out.println("Error,UserExistsServlet,"  + e.getMessage());
+                out.println(e.getMessage());
         }
     }
 }
